@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "start": "parcel src/index.html"
+  },
+  "devDependencies": {
+    "parcel": "^2.9.3"
+  },
   "dependencies": {
     "three": "^0.153.0"
   }
