@@ -3,6 +3,7 @@
     "start": "parcel src/index.html"
   },
   "devDependencies": {
+    "dat.gui": "^0.7.9",
     "parcel": "^2.9.3"
   },
   "dependencies": {
