@@ -654,6 +654,7 @@ const animate = (time)=>{
     spotLight.penumbra = options.penumbra;
     spotLight.intensity = options.intensity;
     sLightHelper.update();
+    scene.rotation.y = time / 5000;
     renderer.render(scene, camera);
 };
 renderer.setAnimationLoop(animate);
