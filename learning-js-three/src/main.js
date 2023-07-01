@@ -77,6 +77,7 @@ spotLight.castShadow = true;
 
 const sLightHelper = new THREE.SpotLightHelper(spotLight);
 scene.add(sLightHelper);
+scene.fog = new THREE.FogExp2(0xFFFFFF, 0.01);
 
 const gui = new dat.GUI();
 
@@ -110,5 +111,11 @@ const animate = (time) => {
     scene.rotation.y = time/5000
     renderer.render(scene, camera);
 }
+
+window.addEventListener('resize', function(e){
+    camera.aspect = window.innerWidth/(window.innerHeight-0.1);
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight-0.1);
+})
 
 renderer.setAnimationLoop(animate)

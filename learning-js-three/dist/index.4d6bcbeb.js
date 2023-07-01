@@ -629,6 +629,7 @@ spotLight.position.set(-50, 100, 0);
 spotLight.castShadow = true;
 const sLightHelper = new _three.SpotLightHelper(spotLight);
 scene.add(sLightHelper);
+scene.fog = new _three.FogExp2(0xFFFFFF, 0.01);
 const gui = new _datGui.GUI();
 const options = {
     sphereColor: "#ffea00",
@@ -657,6 +658,11 @@ const animate = (time)=>{
     scene.rotation.y = time / 5000;
     renderer.render(scene, camera);
 };
+window.addEventListener("resize", function(e) {
+    camera.aspect = window.innerWidth / (window.innerHeight - 0.1);
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight - 0.1);
+});
 renderer.setAnimationLoop(animate);
 
 },{"three":"ktPTu","three/examples/jsm/controls/OrbitControls.js":"7mqRv","dat.gui":"k3xQk"}],"ktPTu":[function(require,module,exports) {
