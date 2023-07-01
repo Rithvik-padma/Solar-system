@@ -1,0 +1,4 @@
+learning-js-three/node_modules/
+learning-js-three/.parcel-cache/data.mdb
+.vscode/
+dist/
