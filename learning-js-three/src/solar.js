@@ -33,7 +33,7 @@ const orbitControls = new OrbitControls(camera, renderer.domElement);
 camera.position.set(-90, 140, 200);
 orbitControls.update()
 
-const ambientLight = new three.AmbientLight(0x333333);
+const ambientLight = new three.AmbientLight(0x333331);
 scene.add(ambientLight);
 
 const texture = new three.TextureLoader(); 
@@ -53,9 +53,36 @@ const sunMaterial = new three.MeshBasicMaterial({
     color: '0xFCE570',
     map: texture.load(sun)
 });
-
 const sunG = new three.Mesh(sunGeometry, sunMaterial);
 scene.add(sunG)
+sunG.pnenumbra = 1;
+
+const pointLight = new three.PointLight(0xFFFFFF, 1, 200)
+scene.add(pointLight);
+
+const mercuryObj = new three.Object3D();
+scene.add(mercuryObj);
+
+const mercuryGeo = new three.SphereGeometry(5 ,100, 100)
+const mercuryMat = new three.MeshStandardMaterial({
+    map: texture.load(sun)
+})
+const mercuryG = new three.Mesh(mercuryGeo, mercuryMat);
+mercuryObj.add(mercuryG);
+mercuryG.position.x = 70;
+mercuryG.rotation.z = 0.03
+
+const venusObj = new three.Object3D();
+scene.add(venusObj);
+
+const venusGeo = new three.SphereGeometry(8 ,100, 100)
+const venusMat = new three.MeshStandardMaterial({
+    map: texture.load(venus)
+})
+const venusG = new three.Mesh(venusGeo, venusMat);
+venusObj.add(venusG);
+venusG.position.x = 110;
+venusG.rotation.z = -2.7;
 
 window.addEventListener('resize', function(e){
     renderer.setSize(window.innerWidth, window.innerHeight - 0.1);
@@ -64,6 +91,11 @@ window.addEventListener('resize', function(e){
 });
 
 const animate = () => {
+    sunG.rotateY(0.004);
+    mercuryObj.rotateY(0.04);
+    venusObj.rotateY(0.015);
+    mercuryG.rotateY(0.004);
+    venusG.rotateY(0.002);
     renderer.render(scene, camera)
 }
 
