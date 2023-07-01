@@ -586,7 +586,7 @@ const camera = new _three.PerspectiveCamera(45, window.innerWidth / (window.inne
 const orbit = new (0, _orbitControlsJs.OrbitControls)(camera, renderer.domElement);
 const axesHelper = new _three.AxesHelper(5);
 scene.add(axesHelper);
-camera.position.set(-10, 30, 30);
+camera.position.set(0, 30, 50);
 orbit.update();
 const boxGeometry = new _three.BoxGeometry(2, 2, 2);
 const boxMaterial = new _three.MeshBasicMaterial({
