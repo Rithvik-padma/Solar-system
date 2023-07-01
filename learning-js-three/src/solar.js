@@ -81,7 +81,7 @@ const venusMat = new three.MeshStandardMaterial({
 })
 const venusG = new three.Mesh(venusGeo, venusMat);
 venusObj.add(venusG);
-venusG.position.x = 110;
+venusG.position.x = 120;
 venusG.rotation.z = -2.7;
 
 window.addEventListener('resize', function(e){
@@ -91,11 +91,11 @@ window.addEventListener('resize', function(e){
 });
 
 const animate = () => {
-    sunG.rotateY(0.004);
-    mercuryObj.rotateY(0.04);
-    venusObj.rotateY(0.015);
-    mercuryG.rotateY(0.004);
-    venusG.rotateY(0.002);
+    sunG.rotateY(0.002);
+    mercuryObj.rotateY(0.02);
+    venusObj.rotateY(0.0075);
+    mercuryG.rotateY(0.002);
+    venusG.rotateY(0.001);
     renderer.render(scene, camera)
 }
 
