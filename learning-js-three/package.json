@@ -1,6 +1,9 @@
 {
+  "name": "my-project",
+  "source": "src/index.html",
   "scripts": {
-    "start": "parcel src/index.html"
+    "start": "npx parcel",
+    "build": "npx parcel build"
   },
   "devDependencies": {
     "dat.gui": "^0.7.9",

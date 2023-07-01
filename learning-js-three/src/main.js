@@ -24,7 +24,7 @@ const orbit = new OrbitControls(camera, renderer.domElement);
 const axesHelper = new THREE.AxesHelper(5);
 scene.add(axesHelper);
 
-camera.position.set(-10, 30, 30)
+camera.position.set(0, 30, 50)
 orbit.update()
 
 const boxGeometry = new THREE.BoxGeometry(2, 2, 2)
