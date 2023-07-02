@@ -120,6 +120,8 @@ const animate = () => {
     mars.obj.rotateY(0.004);
     jupiter.obj.rotateY(0.001);
     saturn.obj.rotateY(0.00045);
+    uranus.obj.rotateY(0.0002);
+    neptune.obj.rotateY(0.00005);
 
     mercury.mesh.rotateY(0.002);
     venus.mesh.rotateY(0.001);
@@ -127,6 +129,8 @@ const animate = () => {
     mars.mesh.rotateY(0.009);
     jupiter.mesh.rotateY(0.02);
     saturn.mesh.rotateY(0.019);
+    uranus.mesh.rotateY(0.015);
+    neptune.mesh.rotateY(0.004);
 
     renderer.render(scene, camera)
 }
