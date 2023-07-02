@@ -2,16 +2,16 @@ import * as three from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import stars from '../assets/solar-img/stars.jpg';
-import sun from '../assets/solar-img/sun.jpg';
-import mercury from '../assets/solar-img/mercury.jpg';
-import venus from '../assets/solar-img/venus.jpg';
-import mars from '../assets/solar-img/mars.jpg';
-import earth from '../assets/solar-img/earth.jpg';
-import saturn from '../assets/solar-img/saturn.jpg';
-import jupiter from '../assets/solar-img/jupiter.jpg';
-import uranus from '../assets/solar-img/uranus.jpg';
-import neptune from '../assets/solar-img/neptune.jpg';
-import saturn_ring from '../assets/solar-img/saturn_ring.png';
+import sunI from '../assets/solar-img/sun.jpg';
+import mercuryI from '../assets/solar-img/mercury.jpg';
+import venusI from '../assets/solar-img/venus.jpg';
+import marsI from '../assets/solar-img/mars.jpg';
+import earthI from '../assets/solar-img/earth.jpg';
+import saturnI from '../assets/solar-img/saturn.jpg';
+import jupiterI from '../assets/solar-img/jupiter.jpg';
+import uranusI from '../assets/solar-img/uranus.jpg';
+import neptuneI from '../assets/solar-img/neptune.jpg';
+import saturn_ringI from '../assets/solar-img/saturn_ring.png';
 
 const renderer = new three.WebGLRenderer();
 
@@ -33,7 +33,7 @@ const orbitControls = new OrbitControls(camera, renderer.domElement);
 camera.position.set(-90, 140, 200);
 orbitControls.update()
 
-const ambientLight = new three.AmbientLight(0x333331);
+const ambientLight = new three.AmbientLight(0x333333);
 scene.add(ambientLight);
 
 const texture = new three.TextureLoader(); 
@@ -51,38 +51,34 @@ scene.background = cubeTexture.load([
 const sunGeometry = new three.SphereGeometry(30, 100, 100);
 const sunMaterial = new three.MeshBasicMaterial({
     color: '0xFCE570',
-    map: texture.load(sun)
+    map: texture.load(sunI)
 });
-const sunG = new three.Mesh(sunGeometry, sunMaterial);
-scene.add(sunG)
-sunG.pnenumbra = 1;
+const sun = new three.Mesh(sunGeometry, sunMaterial);
+scene.add(sun)
+sun.pnenumbra = 1;
 
 const pointLight = new three.PointLight(0xFFFFFF, 1, 200)
 scene.add(pointLight);
 
-const mercuryObj = new three.Object3D();
-scene.add(mercuryObj);
+const createPlanet = (size, distance, ptexture, rotationAxis) => {
+    const geo = new three.SphereGeometry(size, 100, 100);
+    const material = new three.MeshStandardMaterial({
+        map: texture.load(ptexture)
+    });
+    const mesh = new three.Mesh(geo, material);
+    const obj = new three.Object3D();
+    obj.add(mesh);
+    mesh.position.x = distance;
+    mesh.rotation.z = rotationAxis;
+    scene.add(obj);
+    return {mesh, obj};
+}
 
-const mercuryGeo = new three.SphereGeometry(5 ,100, 100)
-const mercuryMat = new three.MeshStandardMaterial({
-    map: texture.load(sun)
-})
-const mercuryG = new three.Mesh(mercuryGeo, mercuryMat);
-mercuryObj.add(mercuryG);
-mercuryG.position.x = 70;
-mercuryG.rotation.z = 0.03
+const mercury = createPlanet(6, 70, mercuryI, 0.03);
+const venus = createPlanet(9, 120, venusI, -2.7);
+const earth = createPlanet(10, 160, earthI, 23);
 
-const venusObj = new three.Object3D();
-scene.add(venusObj);
-
-const venusGeo = new three.SphereGeometry(8 ,100, 100)
-const venusMat = new three.MeshStandardMaterial({
-    map: texture.load(venus)
-})
-const venusG = new three.Mesh(venusGeo, venusMat);
-venusObj.add(venusG);
-venusG.position.x = 120;
-venusG.rotation.z = -2.7;
+console.log(mercury);
 
 window.addEventListener('resize', function(e){
     renderer.setSize(window.innerWidth, window.innerHeight - 0.1);
@@ -91,11 +87,16 @@ window.addEventListener('resize', function(e){
 });
 
 const animate = () => {
-    sunG.rotateY(0.002);
-    mercuryObj.rotateY(0.02);
-    venusObj.rotateY(0.0075);
-    mercuryG.rotateY(0.002);
-    venusG.rotateY(0.001);
+    sun.rotateY(0.002);
+
+    mercury.obj.rotateY(0.02);
+    venus.obj.rotateY(0.0075);
+    earth.obj.rotateY(0.005);
+
+    mercury.mesh.rotateY(0.002);
+    venus.mesh.rotateY(0.001);
+    earth.mesh.rotateY(0.01);
+
     renderer.render(scene, camera)
 }
 
