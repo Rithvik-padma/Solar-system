@@ -30,7 +30,7 @@ const camera = new three.PerspectiveCamera(
 
 const orbitControls = new OrbitControls(camera, renderer.domElement);
 
-camera.position.set(-90, 140, 200);
+camera.position.set(-100, 150, 320);
 orbitControls.update()
 
 const ambientLight = new three.AmbientLight(0x333333);
@@ -48,7 +48,7 @@ scene.background = cubeTexture.load([
     stars
 ])
 
-const sunGeometry = new three.SphereGeometry(30, 100, 100);
+const sunGeometry = new three.SphereGeometry(27, 100, 100);
 const sunMaterial = new three.MeshBasicMaterial({
     color: '0xFCE570',
     map: texture.load(sunI)
@@ -57,10 +57,10 @@ const sun = new three.Mesh(sunGeometry, sunMaterial);
 scene.add(sun)
 sun.pnenumbra = 1;
 
-const pointLight = new three.PointLight(0xFFFFFF, 1, 200)
+const pointLight = new three.PointLight(0xFFFFFF, 1, 500)
 scene.add(pointLight);
 
-const createPlanet = (size, distance, ptexture, rotationAxis) => {
+const createPlanet = (size, distance, ptexture, rotationAxis, ring) => {
     const geo = new three.SphereGeometry(size, 100, 100);
     const material = new three.MeshStandardMaterial({
         map: texture.load(ptexture)
@@ -68,6 +68,19 @@ const createPlanet = (size, distance, ptexture, rotationAxis) => {
     const mesh = new three.Mesh(geo, material);
     const obj = new three.Object3D();
     obj.add(mesh);
+    if(ring){
+        const rgeo = new three.RingGeometry(
+            ring.innerRadius,
+            ring.outerRadius,
+            50
+        );
+        const rmat = new three.MeshStandardMaterial({
+            map: texture.load(ring.texture),
+            side: three.DoubleSide
+        })
+        const rFig = new three.Mesh(rgeo, rmat);
+        mesh.add(rFig);
+    }
     mesh.position.x = distance;
     mesh.rotation.z = rotationAxis;
     scene.add(obj);
@@ -76,7 +89,9 @@ const createPlanet = (size, distance, ptexture, rotationAxis) => {
 
 const mercury = createPlanet(6, 70, mercuryI, 0.03);
 const venus = createPlanet(9, 120, venusI, -2.7);
-const earth = createPlanet(10, 160, earthI, 23);
+const earth = createPlanet(10, 180, earthI, 23);
+const mars = createPlanet(8, 230, marsI, 25);
+const jupiter = createPlanet(19, 310, jupiterI, 3);
 
 console.log(mercury);
 
@@ -92,10 +107,14 @@ const animate = () => {
     mercury.obj.rotateY(0.02);
     venus.obj.rotateY(0.0075);
     earth.obj.rotateY(0.005);
+    mars.obj.rotateY(0.004);
+    jupiter.obj.rotateY(0.001)
 
     mercury.mesh.rotateY(0.002);
     venus.mesh.rotateY(0.001);
     earth.mesh.rotateY(0.01);
+    mars.mesh.rotateY(0.009);
+    jupiter.mesh.rotateY(0.02);
 
     renderer.render(scene, camera)
 }
