@@ -24,7 +24,7 @@ const scene = new three.Scene();
 const camera = new three.PerspectiveCamera(
     45,
     window.innerWidth/(window.innerHeight - 0.1),
-    0.1,
+    0.01,
     1000
 );
 
@@ -68,21 +68,26 @@ const createPlanet = (size, distance, ptexture, rotationAxis, ring) => {
     const mesh = new three.Mesh(geo, material);
     const obj = new three.Object3D();
     obj.add(mesh);
+    let rFig;
     if(ring){
         const rgeo = new three.RingGeometry(
             ring.innerRadius,
             ring.outerRadius,
-            50
+            100
         );
         const rmat = new three.MeshStandardMaterial({
             map: texture.load(ring.texture),
             side: three.DoubleSide
         })
-        const rFig = new three.Mesh(rgeo, rmat);
+        rFig = new three.Mesh(rgeo, rmat);
         mesh.add(rFig);
     }
     mesh.position.x = distance;
-    mesh.rotation.z = rotationAxis;
+    mesh.rotation.x = rotationAxis * Math.PI/180;
+    if(ring) {
+        rFig.rotation.x = Math.PI * (90)/180;
+
+    }
     scene.add(obj);
     return {mesh, obj};
 }
@@ -92,8 +97,11 @@ const venus = createPlanet(9, 120, venusI, -2.7);
 const earth = createPlanet(10, 180, earthI, 23);
 const mars = createPlanet(8, 230, marsI, 25);
 const jupiter = createPlanet(19, 310, jupiterI, 3);
-
-console.log(mercury);
+const saturn = createPlanet(17, 400, saturnI, 27, {
+    innerRadius: 20,
+    outerRadius: 30,
+    texture: saturn_ringI
+});
 
 window.addEventListener('resize', function(e){
     renderer.setSize(window.innerWidth, window.innerHeight - 0.1);
@@ -108,13 +116,15 @@ const animate = () => {
     venus.obj.rotateY(0.0075);
     earth.obj.rotateY(0.005);
     mars.obj.rotateY(0.004);
-    jupiter.obj.rotateY(0.001)
+    jupiter.obj.rotateY(0.001);
+    saturn.obj.rotateY(0.00045);
 
     mercury.mesh.rotateY(0.002);
     venus.mesh.rotateY(0.001);
     earth.mesh.rotateY(0.01);
     mars.mesh.rotateY(0.009);
     jupiter.mesh.rotateY(0.02);
+    saturn.mesh.rotateY(0.019);
 
     renderer.render(scene, camera)
 }
