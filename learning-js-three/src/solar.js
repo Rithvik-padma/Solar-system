@@ -97,11 +97,13 @@ const venus = createPlanet(9, 120, venusI, -2.7);
 const earth = createPlanet(10, 180, earthI, 23);
 const mars = createPlanet(8, 230, marsI, 25);
 const jupiter = createPlanet(19, 310, jupiterI, 3);
-const saturn = createPlanet(17, 400, saturnI, 27, {
+const saturn = createPlanet(17, 390, saturnI, 27, {
     innerRadius: 20,
     outerRadius: 30,
     texture: saturn_ringI
 });
+const uranus = createPlanet(11.5, 470, uranusI, 98);
+const neptune = createPlanet(11.5, 515, neptuneI, 30);
 
 window.addEventListener('resize', function(e){
     renderer.setSize(window.innerWidth, window.innerHeight - 0.1);
