@@ -1,36 +1,36 @@
 import * as three from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-import stars from '../assets/solar-img/stars.jpg';
-import sunI from '../assets/solar-img/sun.jpg';
-import mercuryI from '../assets/solar-img/mercury.jpg';
-import venusI from '../assets/solar-img/venus.jpg';
-import marsI from '../assets/solar-img/mars.jpg';
-import earthI from '../assets/solar-img/earth.jpg';
-import saturnI from '../assets/solar-img/saturn.jpg';
-import jupiterI from '../assets/solar-img/jupiter.jpg';
-import uranusI from '../assets/solar-img/uranus.jpg';
-import neptuneI from '../assets/solar-img/neptune.jpg';
-import saturn_ringI from '../assets/solar-img/saturn_ring.png';
+import stars from '/stars.jpg';
+import sunI from '/sun.jpg';
+import mercuryI from '/mercury.jpg';
+import venusI from '/venus.jpg';
+import marsI from '/mars.jpg';
+import earthI from '/earth.jpg';
+import saturnI from '/saturn.jpg';
+import jupiterI from '/jupiter.jpg';
+import uranusI from '/uranus.jpg';
+import neptuneI from '/neptune.jpg';
+import saturn_ringI from '/saturn_ring.png';
 
 const renderer = new three.WebGLRenderer();
 
-renderer.setSize(window.innerWidth, window.innerHeight -0.1);
+renderer.setSize(window.innerWidth, window.innerHeight);
 
 document.body.appendChild(renderer.domElement)
 
 const scene = new three.Scene();
 
 const camera = new three.PerspectiveCamera(
-    45,
-    window.innerWidth/(window.innerHeight - 0.1),
+    50,
+    window.innerWidth/window.innerHeight,
     0.01,
     1000
 );
 
 const orbitControls = new OrbitControls(camera, renderer.domElement);
 
-camera.position.set(-100, 150, 320);
+camera.position.set(-100, 250, 400);
 orbitControls.update()
 
 const ambientLight = new three.AmbientLight(0x333333);
@@ -57,7 +57,7 @@ const sun = new three.Mesh(sunGeometry, sunMaterial);
 scene.add(sun)
 sun.pnenumbra = 1;
 
-const pointLight = new three.PointLight(0xFFFFFF, 1, 500)
+const pointLight = new three.PointLight(0xFFFFFF, 1, 2500)
 scene.add(pointLight);
 
 const createPlanet = (size, distance, ptexture, rotationAxis, ring) => {
@@ -106,8 +106,8 @@ const uranus = createPlanet(11.5, 470, uranusI, 98);
 const neptune = createPlanet(11.5, 515, neptuneI, 30);
 
 window.addEventListener('resize', function(e){
-    renderer.setSize(window.innerWidth, window.innerHeight - 0.1);
-    camera.aspect = window.innerWidth/(window.innerHeight - 0.1);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth/window.innerHeight;
     camera.updateProjectionMatrix();
 });
 
